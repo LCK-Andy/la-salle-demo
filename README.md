@@ -3,6 +3,7 @@
 ## Install Git on macOS （在 macOS 上安装 Git）
 
 ### Step 1: Install Homebrew  
+
 （步骤 1：安装 Homebrew）
 
 ```bash
@@ -10,6 +11,7 @@
 ```
 
 ### Step 2: Install Git using Homebrew  
+
 （步骤 2：使用 Homebrew 安装 Git）
 
 ```bash
@@ -17,6 +19,7 @@ brew install git
 ```
 
 ### Step 3: Configure Git username and email  
+
 （步骤 3：配置 Git 用户名和邮箱）
 
 ```bash
@@ -32,6 +35,7 @@ git config --global user.email "your.email@example.com" # You can use GitHub pri
 ---
 
 ## How to use VSCode with GitHub  
+
 ## 如何在 VSCode 和 GitHub 搭配使用
 
 1. Create a project on GitHub (done by the leader).  
@@ -44,12 +48,15 @@ git config --global user.email "your.email@example.com" # You can use GitHub pri
     打开 VSCode 的终端（Terminal）。
 5. Enter the following command in the terminal to clone the project (get the address from the green "Code" button on the GitHub project page):  
     在终端输入以下命令，克隆项目（地址可在 GitHub 项目页面的绿色 “Code” 按钮获取）：
+
      ```bash
      git clone <github project address>
      ```
+
      ```bash
      git clone <github项目地址>
      ```
+
 6. Press Enter and wait for the download to complete.  
     回车，等待下载完成。
 7. After downloading, you can see the project files in VSCode.  
@@ -70,3 +77,4 @@ git config --global user.email "your.email@example.com" # You can use GitHub pri
      回到 GitHub 项目页面，确认修改已上传成功。
 15. Other members can repeat steps 4-6 to download the latest changes to their computers.  
      其他成员可重复 4-6 步，将最新修改下载到自己的电脑。
+     
