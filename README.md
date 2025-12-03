@@ -1,6 +1,6 @@
 # la-salle-demo
 
-intall git on macOS
+install git on macOS
 
 1
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
