@@ -1,135 +1,107 @@
 # Git 拉取策略：合并、变基和快进  
 Git Pull Strategies: Merge, Rebase, and Fast-Forward
 
-当你运行 `git pull` 时，Git 会从远程仓库获取更改并将其集成到你的本地分支。根据情况，Git 可能会使用三种策略之一来集成更改：**合并（merge）**、**变基（rebase）** 或 **快进（fast-forward）**。以下是每种策略的详细说明。  
-When you run `git pull`, Git fetches changes from the remote repository and integrates them into your local branch. Depending on the situation, Git may use one of three strategies to integrate changes: **merge**, **rebase**, or **fast-forward**. Here's a detailed explanation of each strategy.
-# Git Pull: Merge, Rebase, and Fast-Forward
-
-When you use `git pull`, Git gets updates from the remote repository (the shared version of your code) and adds them to your local branch (your copy of the code). There are three ways Git can do this: **merge**, **rebase**, and **fast-forward**. Let’s break them down simply.
+当你运行 `git pull` 时，Git 会从远程仓库获取更改并将其集成到你的本地分支。根据情况，Git 可能会使用三种策略之一来集成更改：**合并（merge）**、**变基（rebase）** 或 **快进（fast-forward）**。  
+When you run `git pull`, Git fetches changes from the remote repository and integrates them into your local branch. Git may use one of three strategies: **merge**, **rebase**, or **fast-forward**.
 
 ---
 
-## 1. Git 合并（Merge）
-
+## 1. 合并（Merge）  
 ### 什么是合并？  
-What is it?
+What is Merge?
 
-`git merge` 会创建一个新的提交，将远程分支的更改与本地分支合并。此策略会保留两个分支的历史。  
-`git merge` creates a new commit that combines the changes from the remote branch with your local branch. This strategy preserves the history of both branches.
-`git merge` combines the changes from the remote branch with your local branch. It creates a new "merge commit" to show that two branches were joined together.
+`git merge` 会创建一个新的提交，将远程分支的更改与本地分支合并，保留两个分支的历史。  
+`git merge` creates a new commit that combines changes from the remote branch with your local branch, preserving both histories.
 
 ### 何时使用？  
-When to use?
+When to Use?
 
-- 当你想保留所有合并的清晰历史时  
-    When you want to keep a clear history of all merges.
-- 当团队中有多个开发者在同一分支协作时  
-    When working in a team where multiple developers are contributing to the same branch.
-- When you want to keep a record of all changes and merges.
-- When working with a team where everyone is making changes.
+- 保留所有合并的历史  
+  Keep a clear history of all merges  
+- 团队协作开发  
+  Teamwork with multiple contributors  
 
 ### 示例  
 Example
 
 ```bash
-# 使用合并方式拉取更改
-$ git pull --merge
+git pull --merge
 ```
 
 ### 结果  
 Result
 
-- 会创建一个新的合并提交  
-    A new merge commit is created.
-- 历史记录显示分支的分叉和合并点  
-    The history shows the divergence and the merge point.
-### What happens?
-
-- A new commit is created to show the merge.
-- The history shows where the branches split and came back together.
+- 创建一个新的合并提交  
+  A new merge commit is created  
+- 历史显示分叉和合并点  
+  History shows divergence and merge points  
 
 ---
 
-## 2. Git 变基（Rebase）
-
+## 2. 变基（Rebase）  
 ### 什么是变基？  
-What is it?
+What is Rebase?
 
-`git rebase` 会通过将你的本地更改应用到远程分支之上来重写提交历史，从而创建线性的历史。  
-`git rebase` rewrites the commit history by applying your local changes on top of the remote branch. This creates a linear history.
-`git rebase` takes your changes and puts them on top of the remote branch’s changes. This makes the history look like a straight line.
+`git rebase` 会将你的本地提交应用到远程分支之上，重写提交历史，形成线性历史。  
+`git rebase` rewrites commit history by applying your local changes on top of the remote branch, creating a linear history.
 
 ### 何时使用？  
-When to use?
+When to Use?
 
-- 当你想要一个干净、线性的历史且不需要合并提交时  
-    When you want a clean, linear history without merge commits.
-- 当你在开发将来会合并的功能分支时  
-    When working on a feature branch that will be merged later.
-- When you want a clean and simple history.
-- When you’re working on your own feature branch.
+- 需要干净、线性的历史  
+  Want a clean, linear history  
+- 功能分支开发  
+  Working on a feature branch  
 
 ### 示例  
 Example
 
 ```bash
-# 使用变基方式拉取更改
-$ git pull --rebase
+git pull --rebase
 ```
 
 ### 结果  
 Result
 
-- 你的本地提交会被重新应用到远程分支之上  
-    Your local commits are replayed on top of the remote branch.
-- 历史变为线性，但提交哈希会改变  
-    The history becomes linear, but the commit hashes change.
+- 本地提交被重新应用到远程分支  
+  Local commits are replayed on top of the remote branch  
+- 历史变为线性，提交哈希改变  
+  History becomes linear, commit hashes change  
 
 > **注意：** 在共享分支上变基需谨慎，因为它会重写历史。  
 > **Note:** Be cautious when rebasing shared branches, as it rewrites history.
-### What happens?
-
-- Your changes are moved to the top of the history.
-- The history looks neat, but the commit IDs change.
-
-> **Be careful!** Don’t rebase if you’re sharing your branch with others. It can cause confusion.
 
 ---
 
-## 3. 快进（Fast-Forward）
-
+## 3. 快进（Fast-Forward）  
 ### 什么是快进？  
-What is it?
+What is Fast-Forward?
 
-当你的本地分支直接落后于远程分支时，`git pull` 会执行快进操作，此时 Git 只需将分支指针向前移动，无需创建新提交。  
-`git pull` performs a fast-forward when your local branch is directly behind the remote branch. In this case, Git simply moves the branch pointer forward without creating a new commit.
-`git pull` does a fast-forward when your branch is already behind the remote branch. Git just moves your branch forward to match the remote branch. No new commits are made.
+当本地分支直接落后于远程分支时，`git pull` 会执行快进操作，只需将分支指针向前移动，无需新提交。  
+When your local branch is directly behind the remote branch, `git pull` performs a fast-forward by moving the branch pointer forward without creating a new commit.
 
 ### 何时使用？  
-When to use?
+When to Use?
 
-- 当你的本地分支没有独特的提交时  
-    When your local branch has no unique commits.
-- 当你想避免不必要的合并提交时  
-    When you want to avoid unnecessary merge commits.
-- When you haven’t made any changes locally.
-- When you just want to update your branch.
+- 本地分支没有独特提交  
+  No unique local commits  
+- 避免不必要的合并提交  
+  Avoid unnecessary merge commits  
 
 ### 示例  
 Example
 
 ```bash
-# 使用快进方式拉取更改
-$ git pull --ff-only
+git pull --ff-only
 ```
 
 ### 结果  
 Result
 
-- 分支指针被更新为与远程分支一致  
-    The branch pointer is updated to match the remote branch.
-- 不会创建新的提交  
-    No new commits are created.
+- 分支指针更新为与远程一致  
+  Branch pointer updated to match remote  
+- 不会创建新提交  
+  No new commits created  
 
 ---
 
@@ -137,42 +109,28 @@ Result
 Configuring Default Pull Behavior
 
 你可以配置 Git 默认使用某种策略：  
-You can configure Git to use a specific strategy by default:
+You can set Git to use a specific strategy by default:
 
-### 设置合并为默认  
-Set Merge as Default
-### What happens?
+- 设置合并为默认  
+  Set Merge as Default  
 
-- Your branch is updated to match the remote branch.
-- No extra commits are created.
+  ```bash
+  git config --global pull.rebase false
+  ```
 
----
+- 设置变基为默认  
+  Set Rebase as Default  
 
-## How to Set a Default Pull Method
+  ```bash
+  git config --global pull.rebase true
+  ```
 
-You can tell Git which method to use by default:
+- 设置仅快进为默认  
+  Set Fast-Forward Only as Default  
 
-### Use Merge as Default
-
-```bash
-git config --global pull.rebase false
-```
-
-### 设置变基为默认  
-Set Rebase as Default
-### Use Rebase as Default
-
-```bash
-git config --global pull.rebase true
-```
-
-### 设置仅快进为默认  
-Set Fast-Forward Only as Default
-### Use Fast-Forward Only as Default
-
-```bash
-git config --global pull.ff only
-```
+  ```bash
+  git config --global pull.ff only
+  ```
 
 ---
 
@@ -193,12 +151,3 @@ Summary
 
 选择最适合你的工作流和团队偏好的策略！  
 Choose the strategy that best fits your workflow and team preferences!
-## Quick Summary
-
-| Method          | History       | When to Use                              |
-|-----------------|---------------|-----------------------------------------|
-| **Merge**       | Shows splits  | Teamwork with lots of changes           |
-| **Rebase**      | Straight line | Clean history for your own work         |
-| **Fast-Forward**| Straight line | Simple updates with no local changes    |
-
-Pick the method that works best for your project!
